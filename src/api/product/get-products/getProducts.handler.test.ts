@@ -1,8 +1,5 @@
-import {
-  type Product,
-  type ProductReadRepository,
-  products as productFromDB,
-} from "@/api/product";
+import { type Product, type ProductReadRepository } from "@/api/product";
+import { products as productFromDB } from "../product.read-repository.mock";
 import { GetProductsHandler } from "@/api/product/get-products";
 
 describe("GetProductsHandler", () => {
