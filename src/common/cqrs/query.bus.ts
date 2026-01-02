@@ -1,9 +1,9 @@
 import type { Query, QueryHandler } from "./query";
 
 export class QueryBus {
-  private handlers = new Map<string, QueryHandler<any, any>>();
+  private handlers = new Map<string, QueryHandler>();
 
-  register(handler: QueryHandler<any, any>) {
+  register<Q extends Query, R>(handler: QueryHandler<Q, R>) {
     this.handlers.set(handler.type, handler);
   }
 

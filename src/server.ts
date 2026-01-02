@@ -9,8 +9,11 @@ import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
-import { ProductReadRepository } from "./api/product";
-import { GetProductsHandler } from "./api/product/get-products";
+import { type Product, ProductReadRepository } from "./api/product";
+import {
+  GetProductsHandler,
+  type GetProductsQuery,
+} from "./api/product/get-products";
 import { productRouter } from "./api/product/product.router";
 import { QueryBus } from "./common/cqrs";
 
@@ -36,7 +39,9 @@ app.use("/users", userRouter);
 
 const productReadRepository = new ProductReadRepository();
 const queryBus = new QueryBus();
-queryBus.register(new GetProductsHandler(productReadRepository));
+queryBus.register<GetProductsQuery, Product[]>(
+  new GetProductsHandler(productReadRepository),
+);
 app.use("/products", productRouter(queryBus));
 
 // Swagger UI

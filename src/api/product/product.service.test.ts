@@ -27,7 +27,7 @@ describe("ProductService", () => {
       expect(result.message).toBe("Products found");
       expect(result.statusCode).toBe(StatusCodes.OK);
       expect(result.responseObject).toEqual(products);
-      expect(result.responseObject!.length).toBeGreaterThan(0);
+      expect(result.responseObject?.length).toBeGreaterThan(0);
     });
 
     it("failure when products array is empty", async () => {
