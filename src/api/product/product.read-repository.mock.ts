@@ -1,5 +1,4 @@
-import { prisma } from "../../../prisma/client";
-import type { Product } from "./product.model";
+import { Product } from ".";
 
 export const products: Product[] = [
   {
@@ -19,9 +18,3 @@ export const products: Product[] = [
     stock: 100,
   },
 ];
-
-export class ProductReadRepository {
-  async findAll(): Promise<Product[]> {
-    return prisma.product.findMany();
-  }
-}
