@@ -1,8 +1,7 @@
 import { StatusCodes } from "http-status-codes";
-
+import type { Product } from "@/api/product";
 import { ProductService } from "@/api/product/product.service";
-import { QueryBus } from "@/common/cqrs";
-import { Product } from "@/api/product";
+import type { QueryBus } from "@/common/cqrs";
 
 describe("ProductService", () => {
   it("Instantiate", () => {

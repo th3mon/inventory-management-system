@@ -9,10 +9,10 @@ import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
+import { ProductReadRepository } from "./api/product";
+import { GetProductsHandler } from "./api/product/get-products";
 import { productRouter } from "./api/product/product.router";
 import { QueryBus } from "./common/cqrs";
-import { GetProductsHandler } from "./api/product/get-products";
-import { ProductReadRepository } from "./api/product";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();

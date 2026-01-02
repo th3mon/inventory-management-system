@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
+import type { QueryBus } from "@/common/cqrs";
 import { ServiceResponse } from "@/common/models/serviceResponse";
-import { Product } from "./product.model";
-import { QueryBus } from "@/common/cqrs";
+import type { Product } from "./product.model";
 
 export class ProductService {
   constructor(private queryBus: QueryBus) {}

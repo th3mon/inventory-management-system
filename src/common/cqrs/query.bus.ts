@@ -1,4 +1,4 @@
-import { Query, QueryHandler } from "./query";
+import type { Query, QueryHandler } from "./query";
 
 export class QueryBus {
   private handlers = new Map<string, QueryHandler<any, any>>();

@@ -1,10 +1,10 @@
-import { Request, Response, Router } from "express";
-import { z } from "zod";
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { type Request, type Response, Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { QueryBus } from "@/common/cqrs";
+import { z } from "zod";
 import { ProductSchema, ProductService } from "@/api/product";
 import { createApiResponse } from "@/api-docs/openAPIResponseBuilders";
+import type { QueryBus } from "@/common/cqrs";
 
 export const productRegistry = new OpenAPIRegistry();
 productRegistry.register("Product", ProductSchema);

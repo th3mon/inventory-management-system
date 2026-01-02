@@ -4,7 +4,6 @@
   "files": { "ignoreUnknown": false, "includes": ["**", "!**/dist"] },
   "formatter": {
     "enabled": true,
-    "lineWidth": 120,
     "bracketSpacing": true,
     "indentStyle": "space"
   },

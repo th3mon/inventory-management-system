@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import request from "supertest";
 
-import { products, type Product } from "@/api/product";
+import { type Product, products } from "@/api/product";
 import type { ServiceResponse } from "@/common/models/serviceResponse";
 import { app } from "@/server";
 

@@ -1,6 +1,6 @@
 import {
-  Product,
-  ProductReadRepository,
+  type Product,
+  type ProductReadRepository,
   products as productFromDB,
 } from "@/api/product";
 import { GetProductsHandler } from "@/api/product/get-products";
