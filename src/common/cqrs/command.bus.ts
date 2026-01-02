@@ -1,4 +1,4 @@
-import { Command, CommandHandler } from "./command";
+import type { Command, CommandHandler } from "./command";
 
 export class CommandBus {
   private handlers = new Map<string, CommandHandler<any, any>>();

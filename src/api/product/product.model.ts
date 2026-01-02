@@ -11,3 +11,8 @@ export const ProductSchema = z.object({
   price: z.number(),
   stock: z.number(),
 });
+
+export type ProductCreate = z.infer<typeof ProductCreateSchema>;
+export const ProductCreateSchema = ProductSchema.omit({
+  id: true,
+});

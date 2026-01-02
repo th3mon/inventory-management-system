@@ -1,12 +1,11 @@
 import express from "express";
-import request from "supertest";
-import { describe, it, expect, vi } from "vitest";
 import { StatusCodes } from "http-status-codes";
-
+import request from "supertest";
+import { describe, expect, it, vi } from "vitest";
+import type { Product } from "@/api/product";
 import { productRouter } from "@/api/product/product.router"; // dopasuj ścieżkę
 import type { QueryBus } from "@/common/cqrs";
 import type { ServiceResponse } from "@/common/models/serviceResponse";
-import type { Product } from "@/api/product";
 import { products } from "./product.read-repository.mock";
 
 describe("Products API Endpoints", () => {

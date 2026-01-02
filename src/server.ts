@@ -3,18 +3,21 @@ import express, { type Express } from "express";
 import helmet from "helmet";
 import { pino } from "pino";
 import { healthCheckRouter } from "@/api/healthCheck/healthCheckRouter";
+import {
+  type Product,
+  ProductReadRepository,
+  productRouter,
+} from "@/api/product";
+import {
+  GetProductsHandler,
+  type GetProductsQuery,
+} from "@/api/product/get-products";
 import { userRouter } from "@/api/user/userRouter";
 import { openAPIRouter } from "@/api-docs/openAPIRouter";
 import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
-import { type Product, ProductReadRepository } from "./api/product";
-import {
-  GetProductsHandler,
-  type GetProductsQuery,
-} from "./api/product/get-products";
-import { productRouter } from "./api/product/product.router";
 import { QueryBus } from "./common/cqrs";
 
 const logger = pino({ name: "server start" });
@@ -42,6 +45,7 @@ const queryBus = new QueryBus();
 queryBus.register<GetProductsQuery, Product[]>(
   new GetProductsHandler(productReadRepository),
 );
+// TODO: Wire Command Bus
 app.use("/products", productRouter(queryBus));
 
 // Swagger UI
