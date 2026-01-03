@@ -2,7 +2,9 @@ import type { Product, ProductWriteRepository } from "@/api/product";
 import type { CreateProductCommand } from "@/api/product/create-product";
 import type { CommandHandler } from "@/common/cqrs";
 
-export class CreateProductsHandler implements CommandHandler<CreateProductCommand> {
+export class CreateProductsHandler
+  implements CommandHandler<CreateProductCommand>
+{
   type: CreateProductCommand["type"] = "CreateProduct";
 
   constructor(private writeRepository: ProductWriteRepository) {}

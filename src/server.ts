@@ -6,9 +6,13 @@ import { healthCheckRouter } from "@/api/healthCheck/healthCheckRouter";
 import {
   type Product,
   ProductReadRepository,
-  productRouter,
   ProductWriteRepository,
+  productRouter,
 } from "@/api/product";
+import {
+  type CreateProductCommand,
+  CreateProductsHandler,
+} from "@/api/product/create-product";
 import {
   GetProductsHandler,
   type GetProductsQuery,
@@ -20,10 +24,6 @@ import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
 import { CommandBus, QueryBus } from "./common/cqrs";
-import {
-  CreateProductCommand,
-  CreateProductsHandler,
-} from "@/api/product/create-product";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();

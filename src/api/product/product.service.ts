@@ -1,9 +1,9 @@
+import type { Request } from "express";
 import { StatusCodes } from "http-status-codes";
 import type { CommandBus, QueryBus } from "@/common/cqrs";
 import { ServiceResponse } from "@/common/models/serviceResponse";
+import type { CreateProductCommand } from "./create-product";
 import type { Product } from "./product.model";
-import { type Request } from "express";
-import { CreateProductCommand } from "./create-product";
 
 export class ProductService {
   constructor(
