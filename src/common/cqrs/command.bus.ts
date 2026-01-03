@@ -1,9 +1,9 @@
 import type { Command, CommandHandler } from "./command";
 
 export class CommandBus {
-  private handlers = new Map<string, CommandHandler<any, any>>();
+  private handlers = new Map<string, CommandHandler>();
 
-  register(handler: CommandHandler<any, any>) {
+  register<C extends Command, R>(handler: CommandHandler<C, R>) {
     this.handlers.set(handler.type, handler);
   }
 

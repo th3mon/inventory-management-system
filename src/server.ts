@@ -7,6 +7,7 @@ import {
   type Product,
   ProductReadRepository,
   productRouter,
+  ProductWriteRepository,
 } from "@/api/product";
 import {
   GetProductsHandler,
@@ -18,7 +19,11 @@ import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
-import { QueryBus } from "./common/cqrs";
+import { CommandBus, QueryBus } from "./common/cqrs";
+import {
+  CreateProductCommand,
+  CreateProductsHandler,
+} from "@/api/product/create-product";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();
@@ -45,8 +50,14 @@ const queryBus = new QueryBus();
 queryBus.register<GetProductsQuery, Product[]>(
   new GetProductsHandler(productReadRepository),
 );
-// TODO: Wire Command Bus
-app.use("/products", productRouter(queryBus));
+
+const productWriteRepository = new ProductWriteRepository();
+const commandBus = new CommandBus();
+commandBus.register<CreateProductCommand, Product>(
+  new CreateProductsHandler(productWriteRepository),
+);
+
+app.use("/products", productRouter(queryBus, commandBus));
 
 // Swagger UI
 app.use(openAPIRouter);
