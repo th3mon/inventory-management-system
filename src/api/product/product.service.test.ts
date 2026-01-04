@@ -1,12 +1,13 @@
 import { StatusCodes } from "http-status-codes";
 import type { Product } from "@/api/product";
 import { ProductService } from "@/api/product/product.service";
-import type { QueryBus } from "@/common/cqrs";
+import type { CommandBus, QueryBus } from "@/common/cqrs";
 
 describe("ProductService", () => {
   it("Instantiate", () => {
     const queryBus = {} as QueryBus;
-    const service = new ProductService(queryBus);
+    const commandBus = {} as CommandBus;
+    const service = new ProductService(queryBus, commandBus);
 
     expect(service).toBeTruthy();
   });
@@ -18,8 +19,8 @@ describe("ProductService", () => {
       const queryBus = {
         execute: vi.fn().mockResolvedValue(products),
       } as unknown as QueryBus;
-
-      const service = new ProductService(queryBus);
+      const commandBus = {} as CommandBus;
+      const service = new ProductService(queryBus, commandBus);
 
       const result = await service.findAll();
 
@@ -34,8 +35,8 @@ describe("ProductService", () => {
       const queryBus = {
         execute: vi.fn().mockResolvedValue([]),
       } as unknown as QueryBus;
-
-      const service = new ProductService(queryBus);
+      const commandBus = {} as CommandBus;
+      const service = new ProductService(queryBus, commandBus);
 
       const result = await service.findAll();
 
@@ -49,8 +50,8 @@ describe("ProductService", () => {
       const queryBus = {
         execute: vi.fn().mockResolvedValue(undefined),
       } as unknown as QueryBus;
-
-      const service = new ProductService(queryBus);
+      const commandBus = {} as CommandBus;
+      const service = new ProductService(queryBus, commandBus);
 
       const result = await service.findAll();
 
@@ -64,8 +65,8 @@ describe("ProductService", () => {
       const queryBus = {
         execute: vi.fn().mockResolvedValue(null),
       } as unknown as QueryBus;
-
-      const service = new ProductService(queryBus);
+      const commandBus = {} as CommandBus;
+      const service = new ProductService(queryBus, commandBus);
 
       const result = await service.findAll();
 
