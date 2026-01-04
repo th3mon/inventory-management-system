@@ -71,5 +71,26 @@ describe("Products API Endpoints", () => {
       expect(responseBody.message).toContain("Product created");
       expect(responseBody.responseObject).toEqual(commandPayload);
     });
+
+    it("should return a error when required data is not given", async () => {
+      const commandPayload: ProductCreate = {
+        name: "name",
+        description: "description",
+        price: 500,
+      } as unknown as ProductCreate;
+
+      const { app, commandBus } = setup({ commandPayload });
+      const response = await request(app)
+        .post("/products")
+        .send(commandPayload);
+      const responseBody: ServiceResponse<null> = response.body;
+
+      expect(commandBus.execute).not.toHaveBeenCalledWith();
+
+      expect(response.statusCode).toEqual(StatusCodes.BAD_REQUEST);
+      expect(responseBody.success).toBe(false);
+      expect(responseBody.message).toEqual("Validation error");
+      expect(responseBody.responseObject).toHaveProperty("fieldErrors");
+    });
   });
 });

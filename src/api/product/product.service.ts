@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import type { CommandBus, QueryBus } from "@/common/cqrs";
 import { ServiceResponse } from "@/common/models/serviceResponse";
 import type { CreateProductCommand } from "./create-product";
-import type { Product } from "./product.model";
+import { ProductCreateSchema, type Product } from "./product.model";
 
 export class ProductService {
   constructor(
@@ -29,6 +29,15 @@ export class ProductService {
 
   async create(req: Request) {
     const body = req.body;
+    const result = ProductCreateSchema.safeParse(body);
+
+    if (!result.success) {
+      return ServiceResponse.failure(
+        "Validation error",
+        result.error.flatten(),
+        StatusCodes.BAD_REQUEST,
+      );
+    }
 
     const product = await this.commandBus.execute<
       CreateProductCommand,

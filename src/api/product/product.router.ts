@@ -25,14 +25,14 @@ export function productRouter(
     const productService = new ProductService(queryBus, commandBus);
     const serviceResponse = await productService.findAll();
 
-    res.status(StatusCodes.OK).send(serviceResponse);
+    res.status(serviceResponse.statusCode).send(serviceResponse);
   });
 
   router.post("/", async (req: Request, res: Response) => {
     const productService = new ProductService(queryBus, commandBus);
     const serviceResponse = await productService.create(req);
 
-    res.status(StatusCodes.CREATED).send(serviceResponse);
+    res.status(serviceResponse.statusCode).send(serviceResponse);
   });
 
   return router;
