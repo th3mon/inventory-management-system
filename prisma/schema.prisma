@@ -13,10 +13,22 @@ datasource db {
   provider = "postgresql"
 }
 
-model Product {
+model ProductWrite {
   id          Int    @id @default(autoincrement())
   name        String @db.VarChar(50)
   description String @db.VarChar(50)
   price       Int
   stock       Int
+
+  @@map("product_write")
+}
+
+model ProductRead {
+  id          Int    @id
+  name        String @db.VarChar(50)
+  description String @db.VarChar(50)
+  price       Int
+  stock       Int
+
+  @@map("product_read")
 }

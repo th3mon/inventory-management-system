@@ -3,6 +3,6 @@ import type { Product } from "./product.model";
 
 export class ProductReadRepository {
   async findAll(): Promise<Product[]> {
-    return prisma.product.findMany();
+    return prisma.productRead.findMany();
   }
 }

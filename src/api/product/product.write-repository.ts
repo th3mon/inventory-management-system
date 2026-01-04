@@ -3,7 +3,7 @@ import type { ProductCreate } from "./product.model";
 
 export class ProductWriteRepository {
   async createProduct(product: ProductCreate) {
-    return prisma.product.create({
+    return prisma.productWrite.create({
       data: {
         name: product.name,
         description: product.description,
