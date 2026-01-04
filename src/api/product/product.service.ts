@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import type { CommandBus, QueryBus } from "@/common/cqrs";
 import { ServiceResponse } from "@/common/models/serviceResponse";
 import type { CreateProductCommand } from "./create-product";
-import { ProductCreateSchema, type Product } from "./product.model";
+import { type Product, ProductCreateSchema } from "./product.model";
 
 export class ProductService {
   constructor(
