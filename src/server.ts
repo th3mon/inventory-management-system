@@ -23,7 +23,7 @@ import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
-import { CommandBus, QueryBus } from "./common/cqrs";
+import { CommandBus, EventBus, QueryBus } from "./common/cqrs";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();
@@ -52,9 +52,10 @@ queryBus.register<GetProductsQuery, Product[]>(
 );
 
 const productWriteRepository = new ProductWriteRepository();
+const events = new EventBus();
 const commandBus = new CommandBus();
 commandBus.register<CreateProductCommand, Product>(
-  new CreateProductsHandler(productWriteRepository),
+  new CreateProductsHandler(productWriteRepository, events),
 );
 
 app.use("/products", productRouter(queryBus, commandBus));
