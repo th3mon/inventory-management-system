@@ -38,6 +38,10 @@ export class ProductService {
       payload: body,
     });
 
-    return ServiceResponse.success<Product>("Product created", product);
+    return ServiceResponse.success<Product>(
+      "Product created",
+      product,
+      StatusCodes.CREATED,
+    );
   }
 }

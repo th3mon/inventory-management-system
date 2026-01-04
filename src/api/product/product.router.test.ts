@@ -47,7 +47,7 @@ describe("Products API Endpoints", () => {
   });
 
   describe("POST /products", () => {
-    it("should send product data", async () => {
+    it("should create product", async () => {
       const commandPayload: ProductCreate = {
         name: "name",
         description: "description",
@@ -66,8 +66,8 @@ describe("Products API Endpoints", () => {
         payload: commandPayload,
       });
 
-      expect(response.statusCode).toEqual(StatusCodes.OK);
-      expect(responseBody.success).toBeTruthy();
+      expect(response.statusCode).toEqual(StatusCodes.CREATED);
+      expect(responseBody.success).toBe(true);
       expect(responseBody.message).toContain("Product created");
       expect(responseBody.responseObject).toEqual(commandPayload);
     });
