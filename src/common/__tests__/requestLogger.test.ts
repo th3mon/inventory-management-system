@@ -28,7 +28,9 @@ describe("Request Logger Middleware", () => {
 
     it("checks existing request id", async () => {
       const requestId = "test-request-id";
-      const response = await request(app).get("/success").set("X-Request-Id", requestId);
+      const response = await request(app)
+        .get("/success")
+        .set("X-Request-Id", requestId);
       expect(response.status).toBe(StatusCodes.OK);
     });
   });
