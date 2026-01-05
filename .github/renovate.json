@@ -34,7 +34,12 @@
       "automerge": true
     },
     {
-      "matchPackageNames": ["vitest", "@vitest/coverage-v8", "supertest", "@types/supertest"],
+      "matchPackageNames": [
+        "vitest",
+        "@vitest/coverage-v8",
+        "supertest",
+        "@types/supertest"
+      ],
       "groupName": "Testing packages",
       "groupSlug": "testing",
       "automerge": true
