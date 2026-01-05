@@ -18,7 +18,6 @@ import {
   GetProductsHandler,
   type GetProductsQuery,
 } from "@/api/product/get-products";
-import { userRouter } from "@/api/user/userRouter";
 import { openAPIRouter } from "@/api-docs/openAPIRouter";
 import errorHandler from "@/common/middleware/errorHandler";
 import rateLimiter from "@/common/middleware/rateLimiter";
@@ -42,10 +41,6 @@ app.use(rateLimiter);
 // Request logging
 app.use(requestLogger);
 
-// Routes
-app.use("/health-check", healthCheckRouter);
-app.use("/users", userRouter);
-
 const productReadRepository = new ProductReadRepository();
 const productWriteRepository = new ProductWriteRepository();
 const events = new EventBus();
@@ -62,6 +57,8 @@ commandBus.register<CreateProductCommand, Product>(
   new CreateProductsHandler(productWriteRepository, events),
 );
 
+// Routes
+app.use("/health-check", healthCheckRouter);
 app.use("/products", productRouter(queryBus, commandBus));
 
 // Swagger UI

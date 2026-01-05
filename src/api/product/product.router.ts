@@ -1,11 +1,14 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { type Request, type Response, Router } from "express";
 import { z } from "zod";
-import { ProductSchema, ProductService } from "@/api/product";
+import {
+  ProductCreateSchema,
+  ProductSchema,
+  ProductService,
+} from "@/api/product";
 import { createApiResponse } from "@/api-docs/openAPIResponseBuilders";
 import type { CommandBus, QueryBus } from "@/common/cqrs";
 
-// TODO: Add POST /products
 export const productRegistry = new OpenAPIRegistry();
 productRegistry.register("Product", ProductSchema);
 productRegistry.registerPath({
@@ -13,6 +16,14 @@ productRegistry.registerPath({
   path: "/products",
   tags: ["Product"],
   responses: createApiResponse(z.array(ProductSchema), "Success"),
+});
+
+productRegistry.register("ProductCreate", ProductCreateSchema);
+productRegistry.registerPath({
+  method: "post",
+  path: "/products",
+  tags: ["Product"],
+  responses: createApiResponse(z.array(ProductCreateSchema), "Success"),
 });
 
 export function productRouter(
