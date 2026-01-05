@@ -8,8 +8,8 @@ export const ProductSchema = z.object({
   id: z.number(),
   name: z.string().max(50),
   description: z.string().max(50),
-  price: z.number(),
-  stock: z.number(),
+  price: z.number().positive(),
+  stock: z.number().positive(),
 });
 
 export type ProductCreate = z.infer<typeof ProductCreateSchema>;

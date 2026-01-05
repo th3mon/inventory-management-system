@@ -1,8 +1,12 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import request from "supertest";
-import { describe, expect, it, vi } from "vitest";
-import type { Product, ProductCreate } from "@/api/product";
+import type { z } from "zod";
+import type {
+  Product,
+  ProductCreate,
+  ProductCreateSchema,
+} from "@/api/product";
 import { productRouter } from "@/api/product/product.router"; // dopasuj ścieżkę
 import type { CommandBus, QueryBus } from "@/common/cqrs";
 import type { ServiceResponse } from "@/common/models/serviceResponse";
@@ -72,7 +76,7 @@ describe("Products API Endpoints", () => {
       expect(responseBody.responseObject).toEqual(commandPayload);
     });
 
-    it("should return a error when required data is not given", async () => {
+    it("should return an error when required data is not given", async () => {
       const commandPayload: ProductCreate = {
         name: "name",
         description: "description",
@@ -91,6 +95,62 @@ describe("Products API Endpoints", () => {
       expect(responseBody.success).toBe(false);
       expect(responseBody.message).toEqual("Validation error");
       expect(responseBody.responseObject).toHaveProperty("fieldErrors");
+    });
+
+    it("should return an error when stock is negative number", async () => {
+      const commandPayload: ProductCreate = {
+        name: "name",
+        description: "description",
+        price: 500,
+        stock: -5,
+      };
+
+      const { app, commandBus } = setup({ commandPayload });
+      const response = await request(app)
+        .post("/products")
+        .send(commandPayload);
+      const responseBody: ServiceResponse<
+        z.inferFlattenedErrors<typeof ProductCreateSchema>
+      > = response.body;
+
+      expect(commandBus.execute).not.toHaveBeenCalled();
+
+      expect(response.statusCode).toEqual(StatusCodes.BAD_REQUEST);
+      expect(responseBody.success).toBe(false);
+      expect(responseBody.message).toEqual("Validation error");
+      expect(responseBody.responseObject).toHaveProperty("fieldErrors");
+      expect(responseBody.responseObject?.fieldErrors).toHaveProperty("stock");
+      expect(responseBody.responseObject?.fieldErrors.stock).toContain(
+        "Number must be greater than 0",
+      );
+    });
+
+    it("should return an error when price is negative number", async () => {
+      const commandPayload: ProductCreate = {
+        name: "name",
+        description: "description",
+        price: -500,
+        stock: 5,
+      };
+
+      const { app, commandBus } = setup({ commandPayload });
+      const response = await request(app)
+        .post("/products")
+        .send(commandPayload);
+      const responseBody: ServiceResponse<
+        z.inferFlattenedErrors<typeof ProductCreateSchema>
+      > = response.body;
+
+      expect(commandBus.execute).not.toHaveBeenCalled();
+
+      expect(response.statusCode).toEqual(StatusCodes.BAD_REQUEST);
+      expect(responseBody.success).toBe(false);
+      expect(responseBody.message).toEqual("Validation error");
+      expect(responseBody.responseObject).toHaveProperty("fieldErrors");
+      expect(responseBody.responseObject?.fieldErrors).toHaveProperty("price");
+      expect(responseBody.responseObject?.fieldErrors.price).toContain(
+        "Number must be greater than 0",
+      );
     });
   });
 });

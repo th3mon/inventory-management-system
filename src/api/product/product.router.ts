@@ -5,6 +5,7 @@ import { ProductSchema, ProductService } from "@/api/product";
 import { createApiResponse } from "@/api-docs/openAPIResponseBuilders";
 import type { CommandBus, QueryBus } from "@/common/cqrs";
 
+// TODO: Add POST /products
 export const productRegistry = new OpenAPIRegistry();
 productRegistry.register("Product", ProductSchema);
 productRegistry.registerPath({
