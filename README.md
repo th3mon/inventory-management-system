@@ -1,119 +1,171 @@
-# 🚀 Express TypeScript Boilerplate 2025
+# Inventory Management System (REST API)
 
 [![CI](https://github.com/edwinhern/express-typescript/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/edwinhern/express-typescript-2024/actions/workflows/ci.yml)
 
-```code
-Hey There! 🙌
-🤾 that ⭐️ button if you like this boilerplate.
+Inventory Management System implemented as a recruitment task.  
+The application exposes a RESTful API for managing products and serves as a foundation for more advanced inventory, pricing, and order-processing logic.
+
+## Project Scope
+
+The goal of the project is to demonstrate:
+
+- API design with Express and TypeScript
+- Clear project structure
+- Input validation and error handling
+- Separation of responsibilities
+  - CQRS-inspired approach
+  - Vertical Slices
+- Readable, testable code
+
+Some business features described in the task specification were planned but not fully implemented (see **TODO** section below).
+
+## Tech Stack
+
+### Runtime & Frameworks
+
+- Node.js
+- Express 5
+- TypeScript
+
+### Data & Persistence
+
+- PostgreSQL
+- Prisma ORM
+
+### Validation & API Docs
+
+- Zod
+- zod-to-openapi
+- Swagger UI
+
+### Tooling & Quality
+
+- Vitest (unit & integration tests)
+- Supertest
+- Biome (linting & formatting)
+- TSUP (build)
+- TSX (dev runtime)
+
+### Security & Observability
+
+- Helmet
+- CORS
+- express-rate-limit
+- Pino (logging)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (ES2020 compatible)
+- PNPM (v10+)
+- PostgreSQL database
+
+### Environment Setup
+
+Create a `.env` file based on the template:
+
+```bash
+cp .env.template .env
 ```
 
-## 🌟 Introduction
+Configure the database connection and other required variables.
 
-Welcome to Express TypeScript Boilerplate 2025 – a simple and ready-to-use starting point for building backend web services with Express.js and TypeScript.
+### Install Dependencies
 
-## 💡 Why We Made This
-
-This starter kit helps you:
-
-- ✨ Start new projects faster
-- 📊 Write clean, consistent code
-- ⚡ Build things quickly
-- 🛡️ Follow best practices for security and testing
-
-## 🚀 What's Included
-
-- 📁 Well-organized folders: Files grouped by feature so you can find things easily
-- 💨 Fast development: Quick code running with `tsx` and error checking with `tsc`
-- 🌐 Latest Node.js: Uses the newest stable Node.js version from `.tool-versions`
-- 🔧 Safe settings: Environment settings checked with Zod to prevent errors
-- 🔗 Short import paths: Clean code with easy imports using path shortcuts
-- 🔄 Auto-updates: Keeps dependencies up-to-date with Renovate
-- 🔒 Better security: Built-in protection with Helmet and CORS settings
-- 📊 Easy tracking: Built-in logging with `pino-http`
-- 🧪 Ready-to-test: Testing tools with Vitest and Supertest already set up
-- ✅ Clean code: Consistent coding style with `Biomejs`
-- 📃 Standard responses: Unified API responses using `ServiceResponse`
-- 🐳 Easy deployment: Ready for Docker containers
-- 📝 Input checking: Request validation using Zod
-- 🧩 API browser: Interactive API docs with Swagger UI
-
-## 🛠️ Getting Started
-
-### Video Demo
-
-For a visual guide, watch the [video demo](https://github.com/user-attachments/assets/b1698dac-d582-45a0-8d61-31131732b74e) to see the setup and running of the project.
-
-### Step-by-Step Guide
-
-#### Step 1: 🚀 Initial Setup
-
-- Clone the repository: `git clone https://github.com/edwinhern/express-typescript.git`
-- Navigate: `cd express-typescript`
-- Install dependencies: `pnpm install`
-
-#### Step 2: ⚙️ Environment Configuration
-
-- Create `.env`: Copy `.env.template` to `.env`
-- Update `.env`: Fill in necessary environment variables
-
-#### Step 3: 🏃‍♂️ Running the Project
-
-- Development Mode: `pnpm start:dev`
-- Building: `pnpm build`
-- Production Mode: Set `NODE_ENV="production"` in `.env` then `pnpm build && pnpm start:prod`
-
-## 🤝 Feedback and Contributions
-
-We'd love to hear your feedback and suggestions for further improvements. Feel free to contribute and join us in making backend development cleaner and faster!
-
-🎉 Happy coding!
-
-## 📁 Folder Structure
-
-```code
-├── biome.json
-├── Dockerfile
-├── LICENSE
-├── package.json
-├── pnpm-lock.yaml
-├── README.md
-├── src
-│   ├── api
-│   │   ├── healthCheck
-│   │   │   ├── __tests__
-│   │   │   │   └── healthCheckRouter.test.ts
-│   │   │   └── healthCheckRouter.ts
-│   │   └── user
-│   │       ├── __tests__
-│   │       │   ├── userRouter.test.ts
-│   │       │   └── userService.test.ts
-│   │       ├── userController.ts
-│   │       ├── userModel.ts
-│   │       ├── userRepository.ts
-│   │       ├── userRouter.ts
-│   │       └── userService.ts
-│   ├── api-docs
-│   │   ├── __tests__
-│   │   │   └── openAPIRouter.test.ts
-│   │   ├── openAPIDocumentGenerator.ts
-│   │   ├── openAPIResponseBuilders.ts
-│   │   └── openAPIRouter.ts
-│   ├── common
-│   │   ├── __tests__
-│   │   │   ├── errorHandler.test.ts
-│   │   │   └── requestLogger.test.ts
-│   │   ├── middleware
-│   │   │   ├── errorHandler.ts
-│   │   │   ├── rateLimiter.ts
-│   │   │   └── requestLogger.ts
-│   │   ├── models
-│   │   │   └── serviceResponse.ts
-│   │   └── utils
-│   │       ├── commonValidation.ts
-│   │       ├── envConfig.ts
-│   │       └── httpHandlers.ts
-│   ├── index.ts
-│   └── server.ts
-├── tsconfig.json
-└── vite.config.mts
+```bash
+pnpm install
 ```
+
+### Database Setup
+
+```bash
+pnpm prisma generate
+pnpm prisma migrate dev
+```
+
+### Running the Application
+
+Development mode (watch mode):
+
+```bash
+pnpm dev
+```
+
+Build the application:
+
+```bash
+pnpm build
+```
+
+Run the production build:
+
+```bash
+pnpm start
+```
+
+### API Documentation
+
+Run development mode and go to `http://localhost:8080/`.
+
+### API Endpoints (Current State)
+
+#### Products
+
+- GET /products
+  - Returns a list of all products.
+- POST /products
+  - Creates a new product.
+
+```json
+{
+  "name": "Coffee Mug",
+  "description": "Ceramic mug",
+  "price": 29.99,
+  "stock": 100
+}
+```
+
+**Note**: Product creation includes basic validation (required fields, positive price).
+
+### TODO / Not Implemented Yet
+
+The following features were **part of the original task requirements but were not fully implemented** due to time constraints:
+
+- Stock management (restock / sell)
+  Endpoints for increasing and decreasing product stock levels are not implemented yet.
+  As a result, stock consistency rules (preventing negative stock) are not enforced.
+- Order creation with stock validation
+  Order creation logic is incomplete.
+  Validation of product availability and atomic stock updates during order placement are not implemented.
+- Location-based pricing
+  Price modifiers based on customer location (US / Europe / Asia) are not implemented.
+  Prices are currently treated as base values without regional adjustments.
+- Discount system (volume-based and promotional)
+  The discount engine (volume-based discounts, Black Friday, and Holiday Sales) has not been implemented.
+  Discount prioritization rules (highest discount only, no combination) are not applied.
+
+These items are explicitly listed to clarify the current scope of the implementation and to document the remaining work required to fully satisfy the task specification.
+
+### Validation & Error Handling
+
+- Request payloads are validated using Zod.
+- Standard HTTP status codes are used:
+  - `400` – invalid input
+  - `404` – resource not found
+  - `500` – internal server error
+
+### Testing
+
+Run all tests in watch mode:
+
+```bash
+pnpm test
+```
+
+Additional scripts:
+
+- `pnpm test:ci` – CI-friendly run (without watch mode)
+- `pnpm test:cov` – test coverage report
+
+Current test coverage focuses on implemented functionality and basic API behavior.
