@@ -5,6 +5,7 @@ import { pino } from "pino";
 import { healthCheckRouter } from "@/api/healthCheck/healthCheckRouter";
 import {
   type Product,
+  ProductProjector,
   ProductReadRepository,
   ProductWriteRepository,
   productRouter,
@@ -46,13 +47,16 @@ app.use("/health-check", healthCheckRouter);
 app.use("/users", userRouter);
 
 const productReadRepository = new ProductReadRepository();
+const productWriteRepository = new ProductWriteRepository();
+const events = new EventBus();
+
+new ProductProjector(productReadRepository, events);
+
 const queryBus = new QueryBus();
 queryBus.register<GetProductsQuery, Product[]>(
   new GetProductsHandler(productReadRepository),
 );
 
-const productWriteRepository = new ProductWriteRepository();
-const events = new EventBus();
 const commandBus = new CommandBus();
 commandBus.register<CreateProductCommand, Product>(
   new CreateProductsHandler(productWriteRepository, events),
