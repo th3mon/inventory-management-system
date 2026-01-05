@@ -13,7 +13,7 @@ describe("GetProductsHandler", () => {
   it("get products", async () => {
     const readRepository = {
       findAll: vi.fn().mockReturnValue(productFromDB),
-    } as ProductReadRepository;
+    } as unknown as ProductReadRepository;
     const getProductsHandler = new GetProductsHandler(readRepository);
 
     const products: Product[] = await getProductsHandler.execute();
